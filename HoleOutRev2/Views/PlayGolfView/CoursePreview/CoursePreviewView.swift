@@ -39,7 +39,7 @@ struct CoursePreviewView: View {
                     
                     // Scorecard View
                     NavigationLink {
-                        HistoryTab()
+                        ScorecardView(for: course)
                     } label: {
                         
                         Label("Preview Scorecard", systemImage: "menucard.fill")
@@ -48,7 +48,6 @@ struct CoursePreviewView: View {
                 } label: {
                     Image(systemName: "flag.circle.fill")
                         .resizable()
-                        .opacity(0.5)
                         .frame(width: 64, height: 64)
                 }
                 Spacer()
@@ -56,27 +55,6 @@ struct CoursePreviewView: View {
             .padding(30)
         }
         .navigationTitle(course.name)
-        
-//        HStack{
-//            Spacer()
-//            NavigationLink {
-//                HistoryTab()
-//            } label: {
-//                Label("Scorecard", systemImage: "magnifyingglass.circle.fill")
-//                    .font(.title2)
-//            }
-//    
-//            Spacer()
-//            
-//            NavigationLink {
-//                HistoryTab()
-//            } label: {
-//                Label("Start Round", systemImage: "figure.golf.circle.fill")
-//                    .font(.title2)
-//            }
-//            Spacer()
-//        }
-//        .padding()
     }
     
 }
