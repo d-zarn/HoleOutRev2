@@ -5,6 +5,15 @@
 //  Created by Dylan Zarn on 2025-05-22.
 //
 
+/// TODO's
+///
+/// Implement RoundService
+/// Make a StatService
+/// Implement Scoring
+/// Make new HoleScoringView
+/// Implement PerformanceView
+/// Implement HistroyView
+
 import SwiftUI
 import SwiftData
 
@@ -34,11 +43,10 @@ struct HoleOutRev2App: App {
 
     var body: some Scene {
         WindowGroup {
-            
+            MainTabView()
         }
         .modelContainer(sharedModelContainer)
         .environmentObject(roundService)
         .environmentObject(courseService)
-        
     }
 }
