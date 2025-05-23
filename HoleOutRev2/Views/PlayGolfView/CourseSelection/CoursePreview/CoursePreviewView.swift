@@ -26,7 +26,7 @@ struct CoursePreviewView: View {
                 CourseOverviewCard(for: course)
                 
             }
-            
+            // Menu Button
             HStack {
                 Menu {
                     // Start Round
@@ -46,7 +46,7 @@ struct CoursePreviewView: View {
                             .font(.title2)
                     }
                 } label: {
-                    Image(systemName: "plus.circle.fill")
+                    Image(systemName: "flag.circle.fill")
                         .resizable()
                         .opacity(0.5)
                         .frame(width: 64, height: 64)

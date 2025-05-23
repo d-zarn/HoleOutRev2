@@ -26,5 +26,4 @@ class CourseModel: Identifiable {
         self.par = par
         self.holes = holes.sorted { $0.id < $1.id }
     }
-
 }
