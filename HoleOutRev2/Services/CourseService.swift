@@ -66,4 +66,16 @@ class CourseService: ObservableObject {
         }
     }
     
+    // MARK: - Computed Properties
+    
+    func getFrontPar(for course: CourseModel) -> Int {
+        let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
+        return holes.prefix(9).reduce(0) { $0 + $1.par }
+    }
+    
+    func getBackPar(for course: CourseModel) -> Int {
+        let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
+        return holes.suffix(9).reduce(0) { $0 + $1.par }
+    }
+    
 }
