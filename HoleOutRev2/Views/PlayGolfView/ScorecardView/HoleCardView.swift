@@ -8,11 +8,43 @@
 import SwiftUI
 
 struct HoleCardView: View {
+    let hole: HoleModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GroupBox {
+            HStack {
+                YardageMarkers(yardages: hole.yardages)
+                Spacer()
+                holeStats
+            }
+        } label: {
+            HStack{
+                Label("", systemImage: "\(hole.holeNumber).square.fill")
+                    .font(.largeTitle)
+                    .foregroundStyle(.green)
+                Text("Par \(hole.par)")
+                    .font(.title2)
+                Spacer()
+                StatItem("Avg. Score", "\(hole.par)")
+                
+            }
+            Divider()
+        }
+        .padding(.horizontal)
     }
+    
+    private var holeStats: some View {
+        VStack(alignment: .leading) {
+            StatItem("Avg. Putts", "0")
+            StatItem("Fairways", "0%")
+            StatItem("GIR", "0%")
+        }
+    }
+    
 }
 
 #Preview {
-    HoleCardView()
+    let courseService = CourseService()
+    HoleCardView(hole: courseService.getDefaultCourse().holes[5])
+        .environmentObject(courseService)
 }
