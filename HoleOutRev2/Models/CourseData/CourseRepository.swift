@@ -58,7 +58,7 @@ private extension CourseModel {
                 HoleModel(id: 8, par: 4, blues: 366, whites: 355, reds: 339, holeType: .dogLeft),
                 HoleModel(id: 9, par: 5, blues: 520, whites: 497, reds: 444, holeType: .dogLeft),
                 HoleModel(id: 10, par: 4, blues: 441, whites: 430, reds: 418, holeType: .dogRight),
-                HoleModel(id: 11, par: 4, blues: 483, whites: 471, reds: 461),
+                HoleModel(id: 11, par: 5, blues: 483, whites: 471, reds: 461),
                 HoleModel(id: 12, par: 3, blues: 220, whites: 206, reds: 223),
                 HoleModel(id: 13, par: 5, blues: 516, whites: 496, reds: 476),
                 HoleModel(id: 14, par: 3, blues: 205, whites: 185, reds: 165),
