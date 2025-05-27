@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CourseSelectView: View {
-    
+    @Binding var navigationPath: NavigationPath
     @EnvironmentObject private var courseService: CourseService
     @State private var searchText = ""
     
@@ -19,8 +19,7 @@ struct CourseSelectView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            Group {
+            VStack {
                 if searchResults.isEmpty {
                     VStack {
                         ContentUnavailableView(
@@ -32,10 +31,9 @@ struct CourseSelectView: View {
                 } else {
                     ScrollView {
                         VStack {
-                            
                             ForEach(searchResults) { course in
                                 NavigationLink {
-                                    CoursePreviewView(for: course)
+                                    CoursePreviewView(for: course, navigationPath: $navigationPath)
                                 } label: {
                                     CourseCardView(for: course)
                                 }
@@ -47,12 +45,11 @@ struct CourseSelectView: View {
             }
             .navigationTitle("Select Course")
             .searchable(text: $searchText, prompt: "Search Courses")
-        }   
     }
 }
 
-#Preview {
-    let courseService = CourseService()
-    CourseSelectView()
-        .environmentObject(courseService)
-}
+//#Preview {
+//    let courseService = CourseService()
+//    CourseSelectView()
+//        .environmentObject(courseService)
+//}
