@@ -12,9 +12,6 @@ enum HoleType: String, Codable {
     case dogRight = "arrowshape.turn.up.right.fill"
 }
 
-import Foundation
-import SwiftData
-
 @Model
 final class HoleModel {
     
@@ -25,10 +22,20 @@ final class HoleModel {
     var yardages: Yardages
     var holeType: HoleType
     
-    // scoring variables
-    var score: Int?
+    // scoring variable
     var isScored: Bool
+    var score: Int
+    
+    // detailed scoring variables
+    var advancedTracking: Bool
+    var numPutts: Int
+    var sandShots: Int
+    var penalties: Int
+    
+    // Extra tracking variables
     var greenInRegulation: Bool
+    var sandSave: Bool
+    var upAndDown: Bool
     
     @Relationship var round: RoundModel?
     
@@ -43,6 +50,27 @@ final class HoleModel {
         //scoring variables
         self.score = par
         self.isScored = false
+        
+        // detailed scoring
+        self.advancedTracking = false
+        self.numPutts = 0
+        self.sandShots = 0
+        self.penalties = 0
+   
         self.greenInRegulation = false
+        self.sandSave = false
+        self.upAndDown = false
     }
+    
+    convenience init(from hole: HoleModel) {
+        self.init(
+            id: hole.holeNumber,
+            par: hole.par,
+            blues: hole.yardages.blues,
+            whites: hole.yardages.whites,
+            reds: hole.yardages.reds,
+            holeType: hole.holeType
+        )
+    }
+    
 }
