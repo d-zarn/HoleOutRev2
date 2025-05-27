@@ -8,28 +8,29 @@
 import SwiftUI
 
 struct ScorecardView: View {
-    
+    @Binding var navigationPath: NavigationPath
     private let course: CourseModel
     @EnvironmentObject private var courseService: CourseService
     
-    init(for course: CourseModel) {
+    init(for course: CourseModel, navigationPath: Binding<NavigationPath>) {
         self.course = course
+        self._navigationPath = navigationPath
     }
     
     var body: some View {
-        ScrollView {
-            GroupBox{
-                HStack {
-                    
-                    StatItem("Front", "\(courseService.getFrontPar(for: course))")
-                    Spacer()
-                    StatItem("Back", "\(courseService.getBackPar(for: course))")
-                    Spacer()
-                    StatItem("Total", "\(course.par)")
-                    
-                }
+        GroupBox{
+            HStack {
+                
+                StatItem("Front", "\(courseService.getFrontPar(by: course))")
+                Spacer()
+                StatItem("Back", "\(courseService.getBackPar(by: course))")
+                Spacer()
+                StatItem("Total", "\(course.par)")
+                
             }
-            .padding(.horizontal)
+        }
+        .padding(.horizontal)
+        ScrollView {
             
             VStack {
                 ForEach(Array(course.holes.sorted(by: { $0.holeNumber < $1.holeNumber }))) { hole in
@@ -40,8 +41,8 @@ struct ScorecardView: View {
     }
 }
 
-#Preview {
-    let courseService = CourseService()
-    ScorecardView(for: courseService.getDefaultCourse())
-        .environmentObject(courseService)
-}
+//#Preview {
+//    let courseService = CourseService()
+//    ScorecardView(for: courseService.getDefaultCourse())
+//        .environmentObject(courseService)
+//}
