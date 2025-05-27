@@ -22,33 +22,35 @@ struct StatPicker: View {
     
     var body: some View {
         HStack {
-            Picker("", selection: $value) {
-                ForEach(range, id: \.self) { num in
-                    Text("\(num)")
-                        .font(.largeTitle)
-                }
-            }
-            .pickerStyle(.wheel)
-            .frame(width: 60, height: 100)
-            .opacity(isTracked ? 1.0 : 0.4)
-            .onChange(of: value) { _, _ in
-                // mark as tracked for user interaction
-                if !isTracked {
-                    isTracked = true
-                }
-            }
-            .overlay(
-                Group {
-                    if !isTracked {
-                        // invisible button to detect first tap
-                        Button("") {
-                            isTracked = true
-                        }
-                        .buttonStyle(.plain)
+            ZStack {
+                Picker("", selection: $value) {
+                    ForEach(range, id: \.self) { num in
+                        Text("\(num)")
+                            .font(.largeTitle)
                     }
                 }
-            )
-        }
-        .padding(.vertical, 4)
+                .pickerStyle(.wheel)
+                .frame(width: 60, height: 100)
+                .opacity(isTracked ? 1.0 : 0.4)
+                .onChange(of: value) { _, _ in
+                    // mark as tracked for user interaction
+                    if !isTracked {
+                        isTracked = true
+                    }
+                }
+                
+                if !isTracked {
+                    // invisible button to detect first tap
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            isTracked = true
+                        }
+                    }
+                }
+                .frame(width: 60, height: 100)
+            }
+            .padding(.vertical, 4)
     }
 }
+    
