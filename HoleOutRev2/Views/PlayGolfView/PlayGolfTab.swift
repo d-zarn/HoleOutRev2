@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct PlayGolfTab: View {
+    @State private var navigationPath = NavigationPath()
+    
     var body: some View {
-        CourseSelectView()
+        NavigationStack(path: $navigationPath) {
+            CourseSelectView(navigationPath: $navigationPath)
+                .navigationDestination(for: RoundModel.self) { round in
+                    RoundScoringView(round: round, navigationPath: $navigationPath)
+                }
+        }
     }
 }
 
