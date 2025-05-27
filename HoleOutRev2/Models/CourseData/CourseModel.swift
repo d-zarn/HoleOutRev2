@@ -9,7 +9,7 @@ import SwiftUI
 class CourseModel: Identifiable {
     
     // Course Identifiers
-    var id: UUID
+    var id: Int
     var name: String
     var address: String
     
@@ -18,8 +18,8 @@ class CourseModel: Identifiable {
     var par: Int
     var holes: [HoleModel]
     
-    init(name: String, address: String, blues: Int, whites: Int, reds: Int, par: Int, holes: [HoleModel]) {
-        self.id = UUID()
+    init(id: Int, name: String, address: String, blues: Int, whites: Int, reds: Int, par: Int, holes: [HoleModel]) {
+        self.id = id
         self.name = name
         self.address = address
         self.yardages = Yardages(b: blues, w: whites, r: reds)
