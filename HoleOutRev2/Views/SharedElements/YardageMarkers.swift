@@ -13,14 +13,16 @@ struct YardageMarkers: View {
     let reds: Int
     let isVertical: Bool
     let markerLeft: Bool
+    let isLarge: Bool
     
     // add them in an init
-    init(yardages: Yardages, isVertical: Bool = true, markerLeft: Bool = true) {
+    init(yardages: Yardages, isVertical: Bool = true, markerLeft: Bool = true, isLarge: Bool = false) {
         self.blues = yardages.blues
         self.whites = yardages.whites
         self.reds = yardages.reds
         self.isVertical = isVertical
         self.markerLeft = markerLeft
+        self.isLarge = isLarge
     }
     
     var body: some View {
@@ -32,7 +34,6 @@ struct YardageMarkers: View {
                     whiteMarker
                     redMarker
                 }
-                .frame(width: 50)
             } else {
                 HStack {
                     blueMarker
@@ -48,54 +49,102 @@ struct YardageMarkers: View {
     
     private var blueMarker: some View {
         HStack(spacing: 6) {
-            if markerLeft {
-                Circle()
-                    .fill(.blue)
-                    .frame(width: 10, height: 10)
-            }
-            Text(String(blues))
-                .font(.footnote)
-                .foregroundStyle(.primary)
-            if !markerLeft {
-                Circle()
-                    .fill(.blue)
-                    .frame(width: 10, height: 10)
+            if !isLarge {
+                if markerLeft {
+                    Circle()
+                        .fill(.blue)
+                        .frame(width: 10, height: 10)
+                }
+                Text(String(blues))
+                    .font(.footnote)
+                    .foregroundStyle(.primary)
+                if !markerLeft {
+                    Circle()
+                        .fill(.blue)
+                        .frame(width: 10, height: 10)
+                }
+            } else {
+                if markerLeft {
+                    Circle()
+                        .fill(.blue)
+                        .frame(width: 15, height: 15)
+                }
+                Text(String(blues))
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                if !markerLeft {
+                    Circle()
+                        .fill(.blue)
+                        .frame(width: 15, height: 15)
+                }
             }
         }
     }
     
     private var whiteMarker: some View {
         HStack(spacing: 6) {
-            if markerLeft {
-                Circle()
-                    .fill(.white)
-                    .frame(width: 10, height: 10)
-            }
-            Text(String(whites))
-                .font(.footnote)
-                .foregroundStyle(.primary)
-            if !markerLeft {
-                Circle()
-                    .fill(.white)
-                    .frame(width: 10, height: 10)
+            if !isLarge {
+                if markerLeft {
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 10, height: 10)
+                }
+                Text(String(whites))
+                    .font(.footnote)
+                    .foregroundStyle(.primary)
+                if !markerLeft {
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 10, height: 10)
+                }
+            } else {
+                if markerLeft {
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 15, height: 15)
+                }
+                Text(String(whites))
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                if !markerLeft {
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 15, height: 15)
+                }
             }
         }
     }
     
     private var redMarker: some View {
         HStack(spacing: 6) {
-            if markerLeft {
-                Circle()
-                    .fill(.red)
-                    .frame(width: 10, height: 10)
-            }
-            Text(String(reds))
-                .font(.footnote)
-                .foregroundStyle(.primary)
-            if !markerLeft {
-                Circle()
-                    .fill(.red)
-                    .frame(width: 10, height: 10)
+            if !isLarge {
+                if markerLeft {
+                    Circle()
+                        .fill(.red)
+                        .frame(width: 10, height: 10)
+                }
+                Text(String(reds))
+                    .font(.footnote)
+                    .foregroundStyle(.primary)
+                if !markerLeft {
+                    Circle()
+                        .fill(.red)
+                        .frame(width: 10, height: 10)
+                }
+            } else {
+                if markerLeft {
+                    Circle()
+                        .fill(.red)
+                        .frame(width: 15, height: 15)
+                }
+                Text(String(reds))
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                if !markerLeft {
+                    Circle()
+                        .fill(.red)
+                        .frame(width: 15, height: 15)
+                }
             }
         }
     }
@@ -109,6 +158,10 @@ struct YardageMarkers: View {
         YardageMarkers(yardages: yards, isVertical: false, markerLeft: false)
         YardageMarkers(yardages: yards, isVertical: true, markerLeft: true)
         YardageMarkers(yardages: yards, isVertical: true, markerLeft: false)
+        YardageMarkers(yardages: yards, isVertical: false, markerLeft: true, isLarge: true)
+        YardageMarkers(yardages: yards, isVertical: false, markerLeft: false, isLarge: true)
+        YardageMarkers(yardages: yards, isVertical: true, markerLeft: true, isLarge: true)
+        YardageMarkers(yardages: yards, isVertical: true, markerLeft: false, isLarge: true)
     }
     .padding()
     .background(Color(.secondarySystemBackground))
