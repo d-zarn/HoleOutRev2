@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RoundScoringView: View {
+    @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var roundService: RoundService
     
@@ -15,13 +16,16 @@ struct RoundScoringView: View {
     @State private var refreshID = UUID()
     @State private var navigationDirection = NavigationDirection.forward
     
+    let logger = Logger()
+    
     enum NavigationDirection {
         case forward
         case backward
     }
     
-    init(round: RoundModel) {
+    init(round: RoundModel, navigationPath: Binding<NavigationPath>) {
         self._round = State(initialValue: round)
+        self._navigationPath = navigationPath
     }
     
     var body: some View {
@@ -74,21 +78,7 @@ struct RoundScoringView: View {
                 .disabled(round.isFirstHole)
                 
                 if round.isLastHole {
-                    
-                    NavigationLink {
-                        RoundSummaryView(round: round)
-                    } label: {
-                        HStack {
-                            Text("Finish")
-                            Image(systemName: "flag.checkered")
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(18)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding()
-                    
+                    finishRoundButton
                 } else {
                     
                 Button(action: {
@@ -115,5 +105,21 @@ struct RoundScoringView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
+    }
+    
+    private var finishRoundButton: some View {
+        NavigationLink {
+            RoundSummaryView(round: round, navigationPath: $navigationPath)
+        } label: {
+            HStack {
+                Text("Finish")
+                Image(systemName: "flag.checkered")
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .cornerRadius(18)
+        }
+        .buttonStyle(.borderedProminent)
+        .padding()
     }
 }
