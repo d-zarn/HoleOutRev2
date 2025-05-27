@@ -8,40 +8,42 @@
 import SwiftUI
 
 struct CoursePreviewView: View {
-    @EnvironmentObject private var courseService: CourseService
+    @Binding var navigationPath: NavigationPath
+    @EnvironmentObject private var roundService: RoundService
     @Environment(\.modelContext) private var modelContext
     
-    private let course: CourseModel
+    @State private var activeRound: RoundModel?
+    @State private var isStartingRound = false
     
+    private let course: CourseModel
     private let logger = Logger()
     
-    init(for course: CourseModel){
+    init(for course: CourseModel, navigationPath: Binding<NavigationPath>){
         self.course = course
+        self._navigationPath = navigationPath
     }
     
     var body: some View {
-        Group {
+        VStack {
             ScrollView {
-                
                 CourseOverviewCard(for: course)
-                
             }
             // Menu Button
             HStack {
                 Menu {
                     // Start Round
-                    NavigationLink {
-                        HistoryTab()
+                    Button {
+                        let newRound = roundService.createNewRound(at: course)
+                        navigationPath.append(newRound)
                     } label: {
                         Label("Start Round", systemImage: "figure.golf")
-                            .font(.title)
+                                                    .font(.title)
                     }
                     
                     // Scorecard View
                     NavigationLink {
-                        ScorecardView(for: course)
+                        ScorecardView(for: course, navigationPath: $navigationPath)
                     } label: {
-                        
                         Label("Preview Scorecard", systemImage: "menucard.fill")
                             .font(.title2)
                     }
@@ -54,13 +56,7 @@ struct CoursePreviewView: View {
             }
             .padding(30)
         }
+        
         .navigationTitle(course.name)
     }
-    
-}
-
-#Preview {
-    let courseService = CourseService()
-    CoursePreviewView(for: courseService.getDefaultCourse())
-        .environmentObject(courseService)
 }
