@@ -8,10 +8,12 @@ struct StatItem: View {
     
     let label: String
     let value: String
+    let isLarge: Bool
     
-    init(_ label: String, _ value: String) {
+    init(_ label: String, _ value: String, isLarge: Bool = false) {
         self.label = label
         self.value = value
+        self.isLarge = isLarge
     }
     
     var body: some View {
@@ -25,7 +27,7 @@ struct StatItem: View {
                     .fontWeight(.bold)
             }
         }
-        .font(.subheadline)
+        .font(isLarge ? .title3 : .subheadline)
     }
 }
 
