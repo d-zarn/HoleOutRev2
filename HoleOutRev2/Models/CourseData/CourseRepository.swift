@@ -9,11 +9,12 @@ import Foundation
 class CourseRepository {
     
     static let shared = CourseRepository()
+    private let logger = Logger()
     
     private init() {}
     
     /// returns course matching ID given
-    func getCourse(byId id: UUID) -> CourseModel? {
+    func getCourse(byId id: Int) -> CourseModel? {
         return courses.first { $0.id == id }
     }
     
@@ -33,7 +34,6 @@ class CourseRepository {
         .southside,
         .maplewood
     ]
-    
 }
     
 private extension CourseModel {
@@ -41,6 +41,7 @@ private extension CourseModel {
     // St. Boniface Golf Course
     static var stBoniface: CourseModel {
         CourseModel(
+            id: 0001,
             name: "St. Boniface Golf Club",
             address: "100 Rue Youville, Winnipeg, MB",
             blues: 6348,
@@ -69,10 +70,10 @@ private extension CourseModel {
             ]
         )
     }
-    
     // Southside Golf Course
     static var southside: CourseModel {
         CourseModel(
+            id: 0002,
             name: "Southside Golf Course",
             address: "2226 Southside Road, Grande Pointe, MB",
             blues: 4696,
@@ -105,6 +106,7 @@ private extension CourseModel {
     // Maplewood Golf Club
     static var maplewood: CourseModel {
         CourseModel(
+            id: 0003,
             name: "Maplewood Golf Club",
             address: "19113 Cure Road, St-Pierre-Jolys, MB",
             blues: 5731,
