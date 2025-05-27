@@ -27,11 +27,13 @@ class CourseService: ObservableObject {
     }
     
     /// Finds a course by its ID
-    /// - Parameter id: The UUID of the course to return
+    /// - Parameter id: The Int id of the course to return
     /// - Returns: The matching course, nil if not found
-    func getCourse(byID id: UUID) -> CourseModel? {
+    func getCourse(byID id: Int) -> CourseModel? {
         logger.log("Looking up course by ID: \(id)")
-        return courseRepository.getCourse(byId: id)
+        let returnedCourse = courseRepository.getCourse(byId: id)
+        logger.log("Retrieved course \(returnedCourse?.name ?? "UNAVAILABLE") by ID: \(id)", level: returnedCourse != nil ? .success : .error)
+        return returnedCourse
     }
     
     /// Finds a course by its name
@@ -68,14 +70,34 @@ class CourseService: ObservableObject {
     
     // MARK: - Computed Properties
     
-    func getFrontPar(for course: CourseModel) -> Int {
+    func getFrontPar(by course: CourseModel) -> Int {
         let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes.prefix(9).reduce(0) { $0 + $1.par }
     }
     
-    func getBackPar(for course: CourseModel) -> Int {
+    func getFrontPar(by id: Int) -> Int {
+        let holes = getCourse(byID: id)?.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
+        return holes?.prefix(9).reduce(0) { $0 + $1.par } ?? 0
+    }
+    
+    func getBackPar(by course: CourseModel) -> Int {
         let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes.suffix(9).reduce(0) { $0 + $1.par }
+    }
+    
+    func getBackPar(by id: Int) -> Int {
+        let holes = getCourse(byID: id)?.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
+        return holes?.suffix(9).reduce(0) { $0 + $1.par } ?? 0
+    }
+    
+    func getTotalPar(by course: CourseModel) -> Int {
+        let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
+        return holes.reduce(0) { $0 + $1.par }
+    }
+    
+    func getTotalPar(by id: Int) -> Int {
+        let holes = getCourse(byID: id)?.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
+        return holes?.reduce(0) { $0 + $1.par } ?? 0
     }
     
 }
