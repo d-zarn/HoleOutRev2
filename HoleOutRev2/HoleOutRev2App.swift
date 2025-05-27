@@ -6,13 +6,11 @@
 //
 
 /// TODO's
-///
-/// Implement RoundService
-/// Make a StatService
-/// Implement Scoring
-/// Make new HoleScoringView
+/// Add RoundCards to CoursePreviewView
 /// Implement PerformanceView
 /// Implement HistroyView
+/// Implement RoundScoreCardView
+/// Add more courses
 
 import SwiftUI
 import SwiftData
