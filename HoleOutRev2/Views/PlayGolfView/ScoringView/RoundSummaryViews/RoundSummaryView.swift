@@ -112,7 +112,7 @@ struct RoundSummaryView: View {
                             .font(.title)
                             .fontWeight(.semibold)
                         Spacer()
-                        RelativeScore(par: courseService.getTotalPar(by: round.courseId), score: round.totalScore, large: true)
+                        RelativeScore(par: round.totalParForPlayedHoles, score: round.totalScore, large: true)
                     }
                 }
                 .padding(.horizontal)
@@ -171,7 +171,7 @@ struct RoundSummaryView: View {
                         .font(.title)
                         .fontWeight(.semibold)
                     Spacer()
-                    RelativeScore(par: courseService.getFrontPar(by: round.courseId), score: round.frontScore, large: true)
+                        RelativeScore(par: round.frontParForPlayedHoles, score: round.frontScore, large: true)
                     }
                 }
                 .padding(.horizontal)
@@ -229,7 +229,7 @@ struct RoundSummaryView: View {
                             .font(.title)
                             .fontWeight(.semibold)
                         Spacer()
-                        RelativeScore(par: courseService.getBackPar(by: round.courseId), score: round.backScore, large: true)
+                        RelativeScore(par: round.backParForPlayedHoles, score: round.backScore, large: true)
                     }
                 }
                 .padding(.horizontal)
