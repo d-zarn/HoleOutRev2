@@ -24,6 +24,7 @@ struct HoleCardView: View {
                     .foregroundStyle(.green)
                 Text("Par \(hole.par)")
                     .font(.title2)
+                    .fontWeight(.bold)
                 Spacer()
                 StatItem("Avg. Score", "\(hole.par)")
                 
@@ -41,10 +42,4 @@ struct HoleCardView: View {
         }
     }
     
-}
-
-#Preview {
-    let courseService = CourseService()
-    HoleCardView(hole: courseService.getDefaultCourse().holes[5])
-        .environmentObject(courseService)
 }

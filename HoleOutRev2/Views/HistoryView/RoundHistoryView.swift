@@ -11,6 +11,7 @@ struct RoundHistoryView: View {
     
     @EnvironmentObject private var roundService: RoundService
     @EnvironmentObject private var courseService: CourseService
+    @Binding var navigationPath: NavigationPath
     @State private var searchText = ""
     
     private let logger = Logger()
@@ -34,7 +35,7 @@ struct RoundHistoryView: View {
                     VStack {
                         ForEach(searchResults) { round in
                             NavigationLink {
-                                
+                                RoundScorecardView(for: round, navigationPath: $navigationPath)
                             } label: {
                                 RoundCardView(round: round)
                             }
@@ -49,6 +50,3 @@ struct RoundHistoryView: View {
     }
 }
 
-#Preview {
-    RoundHistoryView()
-}

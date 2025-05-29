@@ -7,9 +7,10 @@
 
 /// TODO's
 /// Add RoundCards to CoursePreviewView
+/// Add Delete & Save buttons to RoundScoringView
+/// Add Scorecard to RoundScoringView
 /// Implement PerformanceView
-/// Implement HistroyView
-/// Implement RoundScoreCardView
+/// Score Composition Stacked Bar Chart
 /// Add more courses
 
 import SwiftUI

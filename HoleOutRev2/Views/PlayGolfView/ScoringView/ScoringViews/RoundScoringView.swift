@@ -75,6 +75,7 @@ struct RoundScoringView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .padding()
                 .disabled(round.isFirstHole)
                 
                 if round.isLastHole {

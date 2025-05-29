@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct HistoryTab: View {
+    @State var navigationPath = NavigationPath()
+    
     var body: some View {
-        NavigationStack {
-            RoundHistoryView()
+        NavigationStack(path: $navigationPath) {
+            RoundHistoryView(navigationPath: $navigationPath)
         }
     }
 }

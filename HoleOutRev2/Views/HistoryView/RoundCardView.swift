@@ -10,10 +10,12 @@ import SwiftUI
 struct RoundCardView: View {
     
     private var round: RoundModel
+    private var isReview: Bool
     @EnvironmentObject private var courseService: CourseService
     
-    init(round: RoundModel) {
+    init(round: RoundModel, isReview: Bool = false) {
         self.round = round
+        self.isReview = isReview
     }
     
     var body: some View {
@@ -31,7 +33,12 @@ struct RoundCardView: View {
                             .foregroundStyle(.secondary)
                     }
                     Spacer()
-                    RelativeScore(par: courseService.getTotalPar(by: round.courseId), score: round.totalScore, large: true)
+                    if isReview {
+                        Text("\(round.totalScore)")
+                            .font(.title)
+                            .fontWeight(.bold)
+                    }
+                    RelativeScore(par: courseService.getTotalPar(by: round.courseId), score: round.totalScore, large: isReview ? false : true)
                 }
                 Divider()
                 HStack {
@@ -40,8 +47,10 @@ struct RoundCardView: View {
                     StatItem("Front", "\(round.frontScore)")
                     Spacer()
                     StatItem("Back", "\(round.backScore)")
-                    Spacer()
-                    StatItem("Final Score", "\(round.totalScore)")
+                    if !isReview {
+                        Spacer()
+                        StatItem("Final Score", "\(round.totalScore)")
+                    }
                 }
             }
 

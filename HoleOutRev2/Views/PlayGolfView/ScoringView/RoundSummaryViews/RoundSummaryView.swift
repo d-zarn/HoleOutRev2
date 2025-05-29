@@ -12,12 +12,14 @@ struct RoundSummaryView: View {
     @Environment(\.selectedTab) private var selectedTab
     @EnvironmentObject private var roundService: RoundService
     @EnvironmentObject private var courseService: CourseService
+    var isReview: Bool
     
     let round: RoundModel
     
-    init(round: RoundModel, navigationPath: Binding<NavigationPath>) {
+    init(round: RoundModel, navigationPath: Binding<NavigationPath>, isReview: Bool = false) {
         self.round = round
         self._navigationPath = navigationPath
+        self.isReview = isReview
     }
     
     
@@ -25,34 +27,36 @@ struct RoundSummaryView: View {
         ScrollView {
             VStack {
                 
-                // Course Detail
-                GroupBox {
-                    Divider()
-                    HStack {
-                        VStack(alignment: .leading) {
-                            
-                            Label("\(round.formattedDate)", systemImage: "calendar")
-                                .foregroundStyle(.secondary)
-                            Label("\(round.formattedDuration)", systemImage: "clock")
-                                .foregroundStyle(.secondary)
+                // Course Detail only show if not in review
+                if !isReview {
+                    GroupBox {
+                        Divider()
+                        HStack {
+                            VStack(alignment: .leading) {
+                                
+                                Label("\(round.formattedDate)", systemImage: "calendar")
+                                    .foregroundStyle(.secondary)
+                                Label("\(round.formattedDuration)", systemImage: "clock")
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Text("\(round.totalScore)")
+                                .font(.largeTitle)
+                                .fontWeight(.semibold)
                         }
-                        Spacer()
-                        Text("\(round.totalScore)")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
+                        
+                    } label: {
+                        Label(
+                            "\(courseService.getCourse(byID: round.courseId)?.name ?? "Course Unavailable")",
+                            systemImage: "flag.fill"
+                        )
+                        .font(.title)
+                        .fontWeight(.semibold)
                     }
-                    
-                } label: {
-                    Label(
-                        "\(courseService.getCourse(byID: round.courseId)?.name ?? "Course Unavailable")",
-                        systemImage: "flag.fill"
-                    )
-                    .font(.title)
-                    .fontWeight(.semibold)
-                }
-                .padding(.horizontal)
-                .onAppear {
-                    round.endTime = Date()
+                    .padding(.horizontal)
+                    .onAppear {
+                        round.endTime = Date()
+                    }
                 }
                 
                 // total summary
@@ -82,12 +86,12 @@ struct RoundSummaryView: View {
                         }
                         
                         HStack {
-                            StatItem("GIR:", "\(String(format: "%.2f", round.totalGreensInRegulation))", isLarge: true)
+                            StatItem("GIR:", "\(round.totalGreensInRegulation)", isLarge: true)
                             Spacer()
                         }
                         
                         HStack {
-                            StatItem("GIR%:", "\(round.totalGirPercentage)%", isLarge: true)
+                            StatItem("GIR%:", "\(String(format: "%.2f", round.totalGirPercentage))%", isLarge: true)
                             Spacer()
                         }
                         
@@ -233,31 +237,33 @@ struct RoundSummaryView: View {
             }
             .navigationTitle("Round Summary")
             
-            HStack {
-                Button {
-                    roundService.completeRound(round)
-                    navigationPath = NavigationPath()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        selectedTab.wrappedValue = 1
+            if !isReview {
+                HStack {
+                    Button {
+                        roundService.completeRound(round)
+                        navigationPath = NavigationPath()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            selectedTab.wrappedValue = 1
+                        }
+                    } label: {
+                        Label("Save Round", systemImage: "square.and.arrow.down.fill")
+                            .frame(maxWidth: .infinity, minHeight: 60)
                     }
-                } label: {
-                    Label("Save Round", systemImage: "square.and.arrow.down.fill")
-                        .frame(maxWidth: .infinity, minHeight: 60)
+                    .buttonStyle(.bordered)
+                    .tint(.green)
+                    
+                    Button {
+                        roundService.deleteRound(round)
+                        navigationPath = NavigationPath()
+                    } label: {
+                        Label("Delete Round", systemImage: "trash.fill")
+                            .frame(maxWidth: .infinity, minHeight: 60)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.red)
                 }
-                .buttonStyle(.bordered)
-                .tint(.green)
-                
-                Button {
-                    roundService.deleteRound(round)
-                    navigationPath = NavigationPath()
-                } label: {
-                    Label("Delete Round", systemImage: "trash.fill")
-                        .frame(maxWidth: .infinity, minHeight: 60)
-                }
-                .buttonStyle(.bordered)
-                .tint(.red)
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
     }
 }
