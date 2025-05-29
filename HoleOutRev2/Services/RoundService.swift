@@ -106,6 +106,10 @@ class RoundService: ObservableObject {
         }
     }
     
+    func getRoundsByCourseId(id: Int) -> [RoundModel] {
+        return getAllRounds().filter{ $0.courseId == id }
+    }
+    
     private func getAllRounds() -> [RoundModel] {
         do {
             let descriptor = FetchDescriptor<RoundModel>(sortBy: [SortDescriptor(\.date, order: .reverse)])
