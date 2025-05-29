@@ -18,31 +18,29 @@ struct ScorecardView: View {
     }
     
     var body: some View {
-        GroupBox{
-            HStack {
+        ZStack {
+            ScrollView {
                 
-                StatItem("Front", "\(courseService.getFrontPar(by: course))")
-                Spacer()
-                StatItem("Back", "\(courseService.getBackPar(by: course))")
-                Spacer()
-                StatItem("Total", "\(course.par)")
-                
-            }
-        }
-        .padding(.horizontal)
-        ScrollView {
-            
-            VStack {
-                ForEach(Array(course.holes.sorted(by: { $0.holeNumber < $1.holeNumber }))) { hole in
-                    HoleCardView(hole: hole)
+                VStack {
+                    ForEach(Array(course.holes.sorted(by: { $0.holeNumber < $1.holeNumber }))) { hole in
+                        HoleCardView(hole: hole)
+                    }
                 }
             }
+            
+            GroupBox{
+                HStack {
+                    
+                    StatItem("Front", "\(courseService.getFrontPar(by: course))")
+                    Spacer()
+                    StatItem("Back", "\(courseService.getBackPar(by: course))")
+                    Spacer()
+                    StatItem("Total", "\(course.par)")
+                    
+                }
+            }
+            .foregroundStyle(.thinMaterial)
+            .padding(.horizontal)
         }
     }
 }
-
-//#Preview {
-//    let courseService = CourseService()
-//    ScorecardView(for: courseService.getDefaultCourse())
-//        .environmentObject(courseService)
-//}

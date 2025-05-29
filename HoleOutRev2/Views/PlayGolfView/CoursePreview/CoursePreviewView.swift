@@ -83,13 +83,14 @@ struct CoursePreviewView: View {
                             Image(systemName: "circle.fill")
                                 .resizable()
                                 .frame(width: 64, height: 64)
-                                .foregroundStyle(.thinMaterial)
+                                .opacity(0.8)
+                                
                             
                             Image(systemName: "flag.circle.fill")
                                 .resizable()
                                 .frame(width: 64, height: 64)
                         }
-                        .opacity(0.6)
+                        .foregroundStyle(.ultraThinMaterial)
                     }
                     Spacer()
                 }
