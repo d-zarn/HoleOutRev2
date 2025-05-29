@@ -6,12 +6,12 @@
 //
 
 /// TODO's
-/// Add RoundCards to CoursePreviewView
 /// Add Delete & Save buttons to RoundScoringView
 /// Add Scorecard to RoundScoringView
 /// Implement PerformanceView
-/// Score Composition Stacked Bar Chart
+/// Score Composition Stacked Bar Chart in performance
 /// Add more courses
+/// Watch Counterpart
 
 import SwiftUI
 import SwiftData
