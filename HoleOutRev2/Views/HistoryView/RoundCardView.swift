@@ -38,7 +38,7 @@ struct RoundCardView: View {
                             .font(.title)
                             .fontWeight(.bold)
                     }
-                    RelativeScore(par: courseService.getTotalPar(by: round.courseId), score: round.totalScore, large: isReview ? false : true)
+                    RelativeScore(par: round.totalParForPlayedHoles, score: round.totalScore, large: isReview ? false : true)
                 }
                 Divider()
                 HStack {
