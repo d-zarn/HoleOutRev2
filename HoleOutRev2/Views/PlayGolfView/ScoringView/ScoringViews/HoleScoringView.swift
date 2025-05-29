@@ -66,30 +66,32 @@ struct HoleScoringView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                // Hole details and scoring wheel
-                Label("", systemImage: "\(hole.holeNumber).square.fill")
-                    .font(.system(size: 90))
-                    .foregroundStyle(.green)
-                YardageMarkers(yardages: hole.yardages, isLarge: true)
-                Spacer()
-                
-                // Relative Score
-                
-                if isScored {
-                    RelativeScore(par: hole.par, score: hole.score, large: true)
-                        .frame(width: 50)
-                } else {
-                    Text("Score:")
-                        .font(.title)
+            GroupBox {
+                HStack {
+                    // Hole details and scoring wheel
+                    Label("", systemImage: "\(hole.holeNumber).square.fill")
+                        .font(.system(size: 90))
+                        .foregroundStyle(.green)
+                    YardageMarkers(yardages: hole.yardages, isLarge: true)
+                    Spacer()
+                    
+                    // Relative Score
+                    
+                    if isScored {
+                        RelativeScore(par: hole.par, score: hole.score, large: true)
+                            .frame(width: 50)
+                    } else {
+                        Text("Score:")
+                            .font(.title)
+                    }
+                    
+                    // Score Picker
+                    StatPicker(
+                        value: $hole.score,
+                        range: 1...15,
+                        isTracked: $hole.isScored
+                    )
                 }
-                
-                // Score Picker
-                StatPicker(
-                    value: $hole.score,
-                    range: 1...15,
-                    isTracked: $hole.isScored
-                )
             }
             .padding()
             
