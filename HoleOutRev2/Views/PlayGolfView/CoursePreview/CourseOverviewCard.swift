@@ -20,6 +20,9 @@ struct CourseOverviewCard: View {
                 Label(course.address, systemImage: "location.fill")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
+                Label("Par \(course.par)", systemImage: "dot.scope")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
                 Divider()
                 HStack {
                     YardageMarkers(yardages: course.yardages,isVertical: false, markerLeft: false)
@@ -30,10 +33,4 @@ struct CourseOverviewCard: View {
         }
         .padding(.horizontal)
     }
-}
-
-#Preview {
-    let courseService = CourseService()
-    CourseOverviewCard(for: courseService.getDefaultCourse())
-        .environmentObject(courseService)
 }

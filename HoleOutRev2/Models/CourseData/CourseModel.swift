@@ -26,4 +26,12 @@ class CourseModel: Identifiable {
         self.par = par
         self.holes = holes.sorted { $0.id < $1.id }
     }
+    
+    var frontPar: Int {
+        holes.sorted { $0.holeNumber < $1.holeNumber }.prefix(9).reduce(0) { $0 + $1.par }
+    }
+    
+    var backPar: Int {
+        holes.sorted { $0.holeNumber < $1.holeNumber }.suffix(9).reduce(0) { $0 + $1.par }
+    }
 }
