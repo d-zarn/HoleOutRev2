@@ -110,6 +110,18 @@ class RoundModel {
         return sortedHoles.suffix(9).filter { $0.isScored }.reduce(0) { $0 + $1.score }
     }
     
+    var totalParForPlayedHoles: Int {
+        return sortedHoles.filter { $0.isScored }.reduce(0) { $0 + $1.par }
+    }
+    
+    var frontParForPlayedHoles: Int {
+        return sortedHoles.prefix(9).filter { $0.isScored }.reduce(0) { $0 + $1.par }
+    }
+    
+    var backParForPlayedHoles: Int {
+        return sortedHoles.suffix(9).filter { $0.isScored }.reduce(0) { $0 + $1.par }
+    }
+    
     var totalPutts: Int {
         return sortedHoles.reduce(0) { $0 +  $1.numPutts }
     }
