@@ -28,7 +28,6 @@ struct CoursePreviewView: View {
             ScrollView {
                 CourseOverviewCard(for: course)
                 VStack {
-                    
                     HStack {
                         Text("Past Rounds")
                             .font(.largeTitle)
@@ -36,6 +35,7 @@ struct CoursePreviewView: View {
                         Spacer()
                     }
                     .padding(.horizontal)
+                    
                     if roundService.getRoundsByCourseId(id: course.id).isEmpty {
                         VStack {
                             ContentUnavailableView(
@@ -59,7 +59,6 @@ struct CoursePreviewView: View {
             // Menu Button
             VStack {
                 Spacer()
-                
                 HStack {
                     Menu {
                         // Start Round
@@ -90,7 +89,7 @@ struct CoursePreviewView: View {
                                 .resizable()
                                 .frame(width: 64, height: 64)
                         }
-                        .foregroundStyle(.ultraThinMaterial)
+                        .foregroundStyle(.ultraThinMaterial, .blue, .opacity(0.8))
                     }
                     Spacer()
                 }
