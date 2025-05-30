@@ -55,6 +55,5 @@ struct RoundHoleCardView: View {
             }
             Divider()
         }
-        .padding(.horizontal)
     }
 }
