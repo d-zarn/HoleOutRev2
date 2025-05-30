@@ -16,10 +16,9 @@ struct RoundSummaryView: View {
     @State private var isTotalsExpanded = false
     @State private var isFrontExpanded = false
     @State private var isBackExpanded = false
+    @State private var isScorecardExpanded = false
     
     var isReview: Bool
-    
-    
     
     let round: RoundModel
     
@@ -68,8 +67,8 @@ struct RoundSummaryView: View {
                 // total summary
                 GroupBox {
                     if isTotalsExpanded {
-                    Divider()
-                    
+                        Divider()
+                        
                         VStack {
                             
                             HStack {
@@ -134,8 +133,8 @@ struct RoundSummaryView: View {
                 // Front 9 Summary
                 GroupBox {
                     if isFrontExpanded {
-                    Divider()
-                    
+                        Divider()
+                        
                         VStack {
                             
                             HStack {
@@ -181,10 +180,10 @@ struct RoundSummaryView: View {
                     }
                 } label: {
                     HStack {
-                    Label("Front 9", systemImage: "plus.forwardslash.minus")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                    Spacer()
+                        Label("Front 9", systemImage: "plus.forwardslash.minus")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                        Spacer()
                         RelativeScore(par: round.frontParForPlayedHoles, score: round.frontScore, large: true)
                     }
                 }
@@ -199,8 +198,8 @@ struct RoundSummaryView: View {
                 // Back 9 Summary
                 GroupBox {
                     if isBackExpanded {
-                    Divider()
-                    
+                        Divider()
+                        
                         VStack {
                             
                             HStack {
@@ -260,10 +259,32 @@ struct RoundSummaryView: View {
                     }
                 }
                 .padding(.horizontal)
-
+                
+                // Scorecard GroupBox
+                if !isReview {
+                    GroupBox {
+                        if isScorecardExpanded {
+                            ForEach(Array(round.sortedHoles)) { hole in
+                                RoundHoleCardView(hole: hole)
+                            }
+                        }
+                    } label: {
+                        Label("Scorecard", systemImage: "pencil.and.scribble")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            isScorecardExpanded.toggle()
+                        }
+                    }
+                    .padding(.horizontal)
+                }
             }
-            .navigationTitle("Round Summary")
+                .navigationTitle("Round Summary")
             
+            // Save & Delete Buttons
             if !isReview {
                 HStack {
                     Button {
