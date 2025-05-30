@@ -20,6 +20,7 @@ struct RoundScorecardView: View {
     var body: some View {
         ScrollView {
             RoundCardView(round: round, isReview: true)
+                .padding(.horizontal)
             RoundSummaryView(round: round, navigationPath: $navigationPath, isReview: true)
             VStack {
                 ForEach(Array(round.sortedHoles)) { hole in
