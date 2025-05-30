@@ -31,17 +31,29 @@ struct RoundHistoryView: View {
                     )
                 }
             } else {
-                ScrollView {
-                    VStack {
-                        ForEach(searchResults) { round in
-                            NavigationLink {
-                                RoundScorecardView(for: round, navigationPath: $navigationPath)
-                            } label: {
-                                RoundCardView(round: round)
+                List {
+                    ForEach(searchResults) { round in
+                        RoundCardView(round: round)
+                            .overlay {
+                                NavigationLink(value: round) {
+                                    EmptyView()
+                                }
+                                .opacity(0.0)
                             }
                             .foregroundStyle(.primary)
-                        }
+                            .listRowSeparator(.hidden)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    roundService.deleteRound(round)
+                                } label: {
+                                    Label("Delete", systemImage: "trash.fill")
+                                }
+                            }
                     }
+                }
+                .listStyle(.plain)
+                .navigationDestination(for: RoundModel.self) { round in
+                    RoundScorecardView(for: round, navigationPath: $navigationPath)
                 }
             }
         }
