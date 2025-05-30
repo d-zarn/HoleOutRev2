@@ -17,29 +17,26 @@ struct ScorecardView: View {
     }
     
     var body: some View {
-        ZStack {
-            ScrollView {
+        GroupBox{
+            HStack {
+                // show the pars for the course
+                StatItem("Front", "\(courseService.getFrontPar(by: course))")
+                Spacer()
+                StatItem("Back", "\(courseService.getBackPar(by: course))")
+                Spacer()
+                StatItem("Total", "\(course.par)")
+                
+            }
+        }
+        .padding(.horizontal)
+        
+        ScrollView {
                 // The list of holes in the course
                 VStack {
                     ForEach(Array(course.holes.sorted(by: { $0.holeNumber < $1.holeNumber }))) { hole in
                         HoleCardView(hole: hole)
                     }
                 }
-            }
-            
-            GroupBox{
-                HStack {
-                    // show the pars for the course
-                    StatItem("Front", "\(courseService.getFrontPar(by: course))")
-                    Spacer()
-                    StatItem("Back", "\(courseService.getBackPar(by: course))")
-                    Spacer()
-                    StatItem("Total", "\(course.par)")
-                    
-                }
-            }
-            .foregroundStyle(.thinMaterial)
-            .padding(.horizontal)
         }
     }
 }
