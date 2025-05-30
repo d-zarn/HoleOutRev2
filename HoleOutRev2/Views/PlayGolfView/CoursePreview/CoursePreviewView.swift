@@ -50,6 +50,7 @@ struct CoursePreviewView: View {
                                 RoundScorecardView(for: round, navigationPath: $navigationPath)
                             } label: {
                                 RoundCardView(round: round)
+                                    .padding(.horizontal)
                             }
                             .foregroundStyle(.primary)
                         }
