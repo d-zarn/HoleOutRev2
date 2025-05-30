@@ -25,6 +25,7 @@ struct RoundScorecardView: View {
             VStack {
                 ForEach(Array(round.sortedHoles)) { hole in
                     RoundHoleCardView(hole: hole)
+                        .padding(.horizontal)
                 }
             }
         }
