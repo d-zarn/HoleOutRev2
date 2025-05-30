@@ -31,6 +31,8 @@ struct RoundCardView: View {
                             .foregroundStyle(.secondary)
                         Label("\(round.formattedDuration)", systemImage: "clock")
                             .foregroundStyle(.secondary)
+                        Label("Scored \(round.numHolesScored) / \(courseService.getCourse(byID: round.courseId)?.holes.count ?? 18)", systemImage: "pencil.and.scribble")
+                            .foregroundStyle(.secondary)
                     }
                     Spacer()
                     if isReview {
@@ -42,7 +44,7 @@ struct RoundCardView: View {
                 }
                 Divider()
                 HStack {
-                    StatItem("Par", "\(courseService.getTotalPar(by: round.courseId))")
+                    StatItem("Par", "\(round.totalParForPlayedHoles)")
                     Spacer()
                     StatItem("Front", "\(round.frontScore)")
                     Spacer()
@@ -57,10 +59,4 @@ struct RoundCardView: View {
         }
         .padding(.horizontal)
     }
-}
-
-#Preview {
-    let courseService = CourseService()
-    RoundCardView(round: RoundModelMock.completeRound())
-        .environmentObject(courseService)
 }
