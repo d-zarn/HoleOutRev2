@@ -1,9 +1,6 @@
-//
-//  RoundHistoryView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-26.
-//
+/**
+ Displays the list of saved rounds as RoundCardViews. Searchable by date and course.
+ */
 
 import SwiftUI
 
@@ -16,24 +13,28 @@ struct RoundHistoryView: View {
     
     private let logger = Logger()
     
+    // array of courses matching date or course name in searchText
     private var searchResults: [RoundModel] {
         roundService.searchRounds(searchText: searchText, courseService: courseService)
     }
     
     var body: some View {
         Group {
+            // display content unavailable if no rounds are available / played
             if searchResults.isEmpty {
                 VStack {
                     ContentUnavailableView(
                         "No rounds matching \(searchText)",
                         systemImage: "flag.slash",
-                        description: Text("Try searching for a different course / date")
+                        description: Text("Save more rounds or try searching for a different course / date")
                     )
                 }
+            // display the list of saved rounds
             } else {
                 List {
                     ForEach(searchResults) { round in
                         RoundCardView(round: round)
+                        // overlay navigationLink to remove list chevron indicator
                             .overlay {
                                 NavigationLink(value: round) {
                                     EmptyView()
@@ -42,6 +43,7 @@ struct RoundHistoryView: View {
                             }
                             .foregroundStyle(.primary)
                             .listRowSeparator(.hidden)
+                            // delete button revealed on left swipe for removing rounds from container
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
                                     roundService.deleteRound(round)
@@ -52,6 +54,7 @@ struct RoundHistoryView: View {
                     }
                 }
                 .listStyle(.plain)
+                // tapping on RoundCards navigates to the RoundScorecard for that round
                 .navigationDestination(for: RoundModel.self) { round in
                     RoundScorecardView(for: round, navigationPath: $navigationPath)
                 }

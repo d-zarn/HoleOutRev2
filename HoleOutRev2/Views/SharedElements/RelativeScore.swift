@@ -40,14 +40,3 @@ struct RelativeScore: View {
         }
     }
 }
-
-#Preview {
-    RelativeScore(par: 3, score: 2)
-    RelativeScore(par: 5, score: 5)
-    RelativeScore(par: 5, score: 7)
-    RelativeScore(par: 5, score: 16)
-    RelativeScore(par: 3, score: 2, large: true)
-    RelativeScore(par: 5, score: 5, large: true)
-    RelativeScore(par: 5, score: 7, large: true)
-    RelativeScore(par: 5, score: 16, large: true)
-}

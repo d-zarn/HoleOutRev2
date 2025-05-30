@@ -30,7 +30,3 @@ struct StatItem: View {
         .font(isLarge ? .title3 : .subheadline)
     }
 }
-
-#Preview {
-    StatItem("Average", "92")
-}

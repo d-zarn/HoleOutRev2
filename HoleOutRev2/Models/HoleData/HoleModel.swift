@@ -56,7 +56,8 @@ final class HoleModel {
         self.numPutts = 0
         self.sandShots = 0
         self.penalties = 0
-   
+        
+        // boolean scoring indicators
         self.greenInRegulation = false
         self.sandSave = false
         self.upAndDown = false

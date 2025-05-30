@@ -1,9 +1,7 @@
-//
-//  ScorecardView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-23.
-//
+/**
+ Displays a scrollable Scorecard for the round using RoundHoleCardViews and
+ a summary of totalled stats for the whole round and breakdowns for the front and back 9s
+ */
 
 import SwiftUI
 
@@ -19,9 +17,12 @@ struct RoundScorecardView: View {
     
     var body: some View {
         ScrollView {
+            // show the round card
             RoundCardView(round: round, isReview: true)
                 .padding(.horizontal)
+            // displays summarized stats for totals, front, and back 9s
             RoundSummaryView(round: round, navigationPath: $navigationPath, isReview: true)
+            // list of RoundHoleCards to make up the scorecard
             VStack {
                 ForEach(Array(round.sortedHoles)) { hole in
                     RoundHoleCardView(hole: hole)

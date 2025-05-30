@@ -1,9 +1,7 @@
-//
-//  RoundScoringView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-25.
-//
+/**
+ The view shown overlaying the HoleScoringView when in Scoring mode.
+ Contains the navigation buttons and logic
+ */
 
 import SwiftUI
 
@@ -51,6 +49,7 @@ struct RoundScoringView: View {
                             ))
                     .animation(.easeInOut(duration: 0.3), value: refreshID)
             } else {
+                // in case of error
                 Text("No hole data available")
                     .font(.title)
                     .foregroundColor(.secondary)
@@ -59,6 +58,7 @@ struct RoundScoringView: View {
             // Navigation & Round controls
             VStack {
                 HStack {
+                    // back button
                     Button(action: {
                         navigationDirection = .backward
                         withAnimation {
@@ -77,12 +77,15 @@ struct RoundScoringView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(.leading)
+                    // disable the button at the first hole
                     .disabled(round.isFirstHole)
                     
+                    // if at last hole show the finish round button to move to summary
+                    // otherwise show the next hole button
                     if round.isLastHole {
                         finishRoundButton
                     } else {
-                        
+                        // next hole button
                         Button(action: {
                             navigationDirection = .forward
                             withAnimation {
@@ -103,7 +106,9 @@ struct RoundScoringView: View {
                         .padding(.trailing)
                     }
                 }
+                // Finish round menu for exiting a round early and skipping to summary or deleting the round
                 Menu {
+                    // Delete Round
                     Button {
                         roundService.deleteRound(round)
                         navigationPath = NavigationPath()
@@ -114,6 +119,7 @@ struct RoundScoringView: View {
                         Label("Delete Round", systemImage: "trash.fill")
                     }
                     
+                    // View Summary
                     NavigationLink {
                         RoundSummaryView(round: round, navigationPath: $navigationPath)
                     } label: {
@@ -124,6 +130,7 @@ struct RoundScoringView: View {
                     }
                     .tint(.green)
                 } label: {
+                    // Finish Round Menu Label
                     Label("Finish Round", systemImage: "flag.pattern.checkered")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -137,6 +144,7 @@ struct RoundScoringView: View {
         .toolbar(.hidden, for: .tabBar)
     }
     
+    // Button shown at last hole in place of next
     private var finishRoundButton: some View {
         NavigationLink {
             RoundSummaryView(round: round, navigationPath: $navigationPath)

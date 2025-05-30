@@ -1,9 +1,6 @@
-//
-//  PlayTab.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-22.
-//
+/**
+ Wrapper for the Course Selection & Scoring View navigations.
+ */
 
 import SwiftUI
 
@@ -20,8 +17,3 @@ struct PlayGolfTab: View {
     }
 }
 
-#Preview {
-    let courseService = CourseService()
-    PlayGolfTab()
-        .environmentObject(courseService)
-}

@@ -7,6 +7,7 @@
 
 /// TODO's
 /// Implement PerformanceView
+/// Add stat summary by course in course overview
 /// Score Composition Stacked Bar Chart in performance
 /// Add more courses
 /// Watch Counterpart

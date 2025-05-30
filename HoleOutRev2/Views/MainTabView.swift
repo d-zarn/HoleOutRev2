@@ -1,9 +1,7 @@
-//
-//  MainTabView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-22.
-//
+/**
+ Wrapper for all tabs within the app
+ Passes the selected tab through the environment to allow for changes within views
+ */
 
 import SwiftUI
 
@@ -46,10 +44,4 @@ struct MainTabView: View {
         }
         .environment(\.selectedTab, $selectedTab)
     }
-}
-
-#Preview {
-    let courseService = CourseService()
-    MainTabView()
-        .environmentObject(courseService)
 }

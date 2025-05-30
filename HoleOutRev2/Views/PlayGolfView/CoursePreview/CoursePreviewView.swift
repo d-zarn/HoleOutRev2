@@ -1,9 +1,7 @@
-//
-//  CoursePreviewView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-22.
-//
+/**
+ Shows past rounds played at the course as well as the course overview.
+ View shown previous to starting a round / viewing the scorecard using the menu button
+ */
 
 import SwiftUI
 
@@ -37,6 +35,7 @@ struct CoursePreviewView: View {
                     .padding(.horizontal)
                     
                     if roundService.getRoundsByCourseId(id: course.id).isEmpty {
+                        // Show a content unavailable view if there's no rounds played at this course
                         VStack {
                             ContentUnavailableView(
                                 "No rounds played at \(course.name)",
@@ -45,6 +44,7 @@ struct CoursePreviewView: View {
                             )
                         }
                     } else {
+                        // show the list of past rounds as RoundCards in a scrolling list
                         ForEach(roundService.getRoundsByCourseId(id: course.id)) { round in
                             NavigationLink {
                                 RoundScorecardView(for: round, navigationPath: $navigationPath)
@@ -57,7 +57,7 @@ struct CoursePreviewView: View {
                     }
                 }
             }
-            // Menu Button
+            // Menu Button used to start a round or preview the scorecard for the course
             VStack {
                 Spacer()
                 HStack {
@@ -97,7 +97,6 @@ struct CoursePreviewView: View {
                 .padding()
             }
         }
-        
         .navigationTitle(course.name)
     }
 }

@@ -1,9 +1,8 @@
-//
-//  RoundSummaryView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-25.
-//
+/**
+ Displays a summary for the round given.
+ Contains the stat summaries for all holes, and the front and back 9s as collapsible GroupBoxes
+ Contains the scorecard for the round if in review mode.
+ */
 
 import SwiftUI
 
@@ -13,6 +12,7 @@ struct RoundSummaryView: View {
     @EnvironmentObject private var roundService: RoundService
     @EnvironmentObject private var courseService: CourseService
     
+    // GroupBox expansion states
     @State private var isTotalsExpanded = false
     @State private var isFrontExpanded = false
     @State private var isBackExpanded = false
@@ -32,7 +32,7 @@ struct RoundSummaryView: View {
         ScrollView {
             VStack {
                 
-                // Course Detail only show if not in review
+                // Course Detail only shown if not in review
                 if !isReview {
                     GroupBox {
                         Divider()
@@ -64,52 +64,24 @@ struct RoundSummaryView: View {
                     }
                 }
                 
-                // total summary
+                // MARK: - Summaries
+                
+                // totals
                 GroupBox {
                     if isTotalsExpanded {
                         Divider()
-                        
-                        VStack {
-                            
-                            HStack {
+                        HStack {
+                            VStack(alignment: .leading) {
                                 StatItem("Putts:", "\(round.totalPutts)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Putts per Hole:", "\(String(format: "%.2f", round.totalAveragePuttsPerHole))", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Sand Shots:", "\(round.totalSandShots)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Penalties:", "\(round.totalPenalties)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("GIR:", "\(round.totalGreensInRegulation)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("GIR%:", "\(String(format: "%.2f", round.totalGirPercentage))%", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Sand Saves:", "\(round.totalSandSaves)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Up & Downs:", "\(round.totalUpAndDowns)", isLarge: true)
-                                Spacer()
                             }
+                            Spacer()
                         }
                     }
                 } label: {
@@ -129,53 +101,22 @@ struct RoundSummaryView: View {
                 }
                 .padding(.horizontal)
                 
-                
-                // Front 9 Summary
+                // Front 9
                 GroupBox {
                     if isFrontExpanded {
                         Divider()
-                        
-                        VStack {
-                            
-                            HStack {
+                        HStack {
+                            VStack {
                                 StatItem("Putts:", "\(round.frontPutts)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Putts per Hole:", "\(String(format: "%.2f", round.frontAveragePuttsPerHole))", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Sand Shots:", "\(round.frontSandShots)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Penalties:", "\(round.frontPenalties)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("GIR:", "\(round.frontGreensInRegulation)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("GIR%:", "\(String(format: "%.2f", round.frontGirPercentage))%", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Sand Saves:", "\(round.frontSandSaves)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Up & Downs:", "\(round.frontUpAndDowns)", isLarge: true)
-                                Spacer()
                             }
+                            Spacer()
                         }
                     }
                 } label: {
@@ -195,52 +136,22 @@ struct RoundSummaryView: View {
                 }
                 .padding(.horizontal)
                 
-                // Back 9 Summary
+                // Back 9
                 GroupBox {
                     if isBackExpanded {
                         Divider()
-                        
-                        VStack {
-                            
-                            HStack {
+                        HStack {
+                            VStack {
                                 StatItem("Putts:", "\(round.backPutts)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Putts per Hole:", "\(String(format: "%.2f", round.backAveragePuttsPerHole))", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Sand Shots:", "\(round.backSandShots)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Penalties:", "\(round.backPenalties)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("GIR:", "\(round.backGreensInRegulation)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("GIR%:", "\(String(format: "%.2f", round.backGirPercentage))%", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Sand Saves:", "\(round.backSandSaves)", isLarge: true)
-                                Spacer()
-                            }
-                            
-                            HStack {
                                 StatItem("Up & Downs:", "\(round.backUpAndDowns)", isLarge: true)
-                                Spacer()
                             }
+                            Spacer()
                         }
                     }
                 } label: {
@@ -260,7 +171,9 @@ struct RoundSummaryView: View {
                 }
                 .padding(.horizontal)
                 
-                // Scorecard GroupBox
+                // MARK: - Scorecard
+                
+                // only displayed in review
                 if !isReview {
                     GroupBox {
                         if isScorecardExpanded {
@@ -284,9 +197,13 @@ struct RoundSummaryView: View {
             }
                 .navigationTitle("Round Summary")
             
+            // MARK: - Buttons
+            
             // Save & Delete Buttons
             if !isReview {
                 HStack {
+                    
+                    // Save
                     Button {
                         roundService.completeRound(round)
                         navigationPath = NavigationPath()
@@ -300,6 +217,7 @@ struct RoundSummaryView: View {
                     .buttonStyle(.bordered)
                     .tint(.green)
                     
+                    // Delete
                     Button {
                         roundService.deleteRound(round)
                         navigationPath = NavigationPath()

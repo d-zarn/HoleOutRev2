@@ -1,9 +1,6 @@
-//
-//  HistoryTab.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-22.
-//
+/**
+ Overarching view used to display the RoundHistoryView
+ */
 
 import SwiftUI
 

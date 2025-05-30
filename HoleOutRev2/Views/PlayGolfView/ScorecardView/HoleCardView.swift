@@ -1,9 +1,7 @@
-//
-//  HoleCardView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-23.
-//
+/**
+ Represents a hole in a course listing the yardages, par, and user averages for the hole.
+ Used in ScorecardView in CoursePreviewView
+ */
 
 import SwiftUI
 

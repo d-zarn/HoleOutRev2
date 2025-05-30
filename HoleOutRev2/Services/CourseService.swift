@@ -1,9 +1,7 @@
-//
-//  CourseService.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-22.
-//
+/**
+ Used to retrieve and search for courses in the course repository
+ Can retreive par details from the course as well
+ */
 
 import Foundation
 import SwiftData
@@ -70,31 +68,55 @@ class CourseService: ObservableObject {
     
     // MARK: - Computed Properties
     
+    /// Sums the par for the front 9 of the given course model
+    /// - Parameters:
+    ///   - course: The course to sum
+    /// - Returns: The par for the front 9 of the course
     func getFrontPar(by course: CourseModel) -> Int {
         let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes.prefix(9).reduce(0) { $0 + $1.par }
     }
     
+    /// Searches for a course matching the given id and returns the summed front 9 par
+    /// - Parameters:
+    ///   - id: the id of the course to retrieve
+    /// - Returns: The par for the front 9 of the course
     func getFrontPar(by id: Int) -> Int {
         let holes = getCourse(byID: id)?.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes?.prefix(9).reduce(0) { $0 + $1.par } ?? 0
     }
     
+    /// Sums the par for the back 9 of the given course model
+    /// - Parameters:
+    ///   - course: The course to sum
+    /// - Returns: The par for the back 9 of the course
     func getBackPar(by course: CourseModel) -> Int {
         let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes.suffix(9).reduce(0) { $0 + $1.par }
     }
     
+    /// Searches for a course matching the given id and returns the summed back 9 par
+    /// - Parameters:
+    ///   - id: the id of the course to retrieve
+    /// - Returns: The par for the back 9 of the course
     func getBackPar(by id: Int) -> Int {
         let holes = getCourse(byID: id)?.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes?.suffix(9).reduce(0) { $0 + $1.par } ?? 0
     }
     
+    /// Sums the par for the given course model
+    /// - Parameters:
+    ///   - course: The course to sum
+    /// - Returns: The par of the course
     func getTotalPar(by course: CourseModel) -> Int {
         let holes = course.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes.reduce(0) { $0 + $1.par }
     }
     
+    /// Searches for a course matching the given id and returns the summed par
+    /// - Parameters:
+    ///   - id: the id of the course to retrieve
+    /// - Returns: The par of the course
     func getTotalPar(by id: Int) -> Int {
         let holes = getCourse(byID: id)?.holes.sorted(by: { $0.holeNumber < $1.holeNumber })
         return holes?.reduce(0) { $0 + $1.par } ?? 0

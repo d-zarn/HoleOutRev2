@@ -1,5 +1,5 @@
 /**
- Displays course details. Includes to, and front / back 9 par, tee total yardages, address
+ Displays course details. Includes total, front, and back 9 par, total yardages by tee, address and stat summary by course
  Used in the CourseDetailSheet
  */
 
@@ -16,6 +16,7 @@ struct CourseOverviewCard: View {
     
     var body: some View {
         GroupBox {
+            // course address and par
             VStack(alignment: .leading) {
                 Label(course.address, systemImage: "location.fill")
                     .font(.subheadline)

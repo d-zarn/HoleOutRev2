@@ -1,9 +1,7 @@
-//
-//  CourseSelectView.swift
-//  HoleOutRev2
-//
-//  Created by Dylan Zarn on 2025-05-22.
-//
+/**
+ Shows the list of available courses as a scrollable, searchable list of CourseCardViews
+ Courses can be searched by name or address
+ */
 
 import SwiftUI
 
@@ -14,12 +12,15 @@ struct CourseSelectView: View {
     
     private let logger = Logger()
     
+    /// contains courses with a name or address matching the given searchText String
+    /// defaults to all available courses if searchText is blank
     private var searchResults: [CourseModel] {
         courseService.searchCourses(searchText: searchText)
     }
     
     var body: some View {
             VStack {
+                // show a course unavailable view if there's no courses in searchResults
                 if searchResults.isEmpty {
                     VStack {
                         ContentUnavailableView(
@@ -28,6 +29,7 @@ struct CourseSelectView: View {
                             description: Text("Try searching for a different course")
                         )
                     }
+                    // show the list of courses in searchResults as CourseCardViews
                 } else {
                     ScrollView {
                         VStack {
