@@ -11,6 +11,7 @@ struct RoundScoringView: View {
     @Binding var navigationPath: NavigationPath
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var roundService: RoundService
+    @Environment(\.selectedTab) private var selectedTab
     
     @State private var round: RoundModel
     @State private var refreshID = UUID()
@@ -55,54 +56,82 @@ struct RoundScoringView: View {
                     .foregroundColor(.secondary)
             }
             
-            // Navigation controls
-            
-            HStack {
-                Button(action: {
-                    navigationDirection = .backward
-                    withAnimation {
-                        round.moveToPreviousHole()
-                        refreshID = UUID()
+            // Navigation & Round controls
+            VStack {
+                HStack {
+                    Button(action: {
+                        navigationDirection = .backward
+                        withAnimation {
+                            round.moveToPreviousHole()
+                            refreshID = UUID()
+                        }
+                        roundService.saveRound(round)
+                    }) {
+                        HStack {
+                            Image(systemName: "arrow.left")
+                            Text("Previous")
+                        }
+                        .padding()
+                        .cornerRadius(18)
+                        .frame(maxWidth: .infinity)
                     }
-                    roundService.saveRound(round)
-                }) {
-                    HStack {
-                        Image(systemName: "arrow.left")
-                        Text("Previous")
-                    }
-                    .padding()
-                    .cornerRadius(18)
-                    .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .padding()
-                .disabled(round.isFirstHole)
-                
-                if round.isLastHole {
-                    finishRoundButton
-                } else {
+                    .buttonStyle(.borderedProminent)
+                    .padding(.leading)
+                    .disabled(round.isFirstHole)
                     
-                Button(action: {
-                    navigationDirection = .forward
-                    withAnimation {
-                        round.moveToNextHole()
-                        refreshID = UUID()
+                    if round.isLastHole {
+                        finishRoundButton
+                    } else {
+                        
+                        Button(action: {
+                            navigationDirection = .forward
+                            withAnimation {
+                                round.moveToNextHole()
+                                refreshID = UUID()
+                            }
+                            roundService.saveRound(round)
+                        }) {
+                            HStack {
+                                Text("Next")
+                                Image(systemName: "arrow.right")
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(18)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(.trailing)
                     }
-                    roundService.saveRound(round)
-                }) {
-                    HStack {
-                        Text("Next")
-                        Image(systemName: "arrow.right")
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .cornerRadius(18)
                 }
+                Menu {
+                    Button {
+                        roundService.deleteRound(round)
+                        navigationPath = NavigationPath()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            selectedTab.wrappedValue = 0
+                        }
+                    } label: {
+                        Label("Delete Round", systemImage: "trash.fill")
+                    }
+                    
+                    NavigationLink {
+                        RoundSummaryView(round: round, navigationPath: $navigationPath)
+                    } label: {
+                        Label("View Summary", systemImage: "plus.forwardslash.minus")
+                    }
+                    .onTapGesture {
+                        roundService.completeRound(round)
+                    }
+                    .tint(.green)
+                } label: {
+                    Label("Finish Round", systemImage: "flag.pattern.checkered")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .tint(.red)
                 .buttonStyle(.borderedProminent)
-                .padding()
+                .padding(.horizontal)
             }
-            
-        }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
