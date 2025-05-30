@@ -57,6 +57,6 @@ struct RoundCardView: View {
             }
 
         }
-        .padding(.horizontal)
+//        .padding(.horizontal)
     }
 }
