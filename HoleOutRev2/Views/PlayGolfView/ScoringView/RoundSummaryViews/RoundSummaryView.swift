@@ -12,7 +12,14 @@ struct RoundSummaryView: View {
     @Environment(\.selectedTab) private var selectedTab
     @EnvironmentObject private var roundService: RoundService
     @EnvironmentObject private var courseService: CourseService
+    
+    @State private var isTotalsExpanded = false
+    @State private var isFrontExpanded = false
+    @State private var isBackExpanded = false
+    
     var isReview: Bool
+    
+    
     
     let round: RoundModel
     
@@ -21,7 +28,6 @@ struct RoundSummaryView: View {
         self._navigationPath = navigationPath
         self.isReview = isReview
     }
-    
     
     var body: some View {
         ScrollView {
@@ -61,50 +67,51 @@ struct RoundSummaryView: View {
                 
                 // total summary
                 GroupBox {
+                    if isTotalsExpanded {
                     Divider()
                     
-                    VStack {
-                        
-                        HStack {
-                            StatItem("Putts:", "\(round.totalPutts)", isLarge: true)
-                            Spacer()
+                        VStack {
+                            
+                            HStack {
+                                StatItem("Putts:", "\(round.totalPutts)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Putts per Hole:", "\(String(format: "%.2f", round.totalAveragePuttsPerHole))", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Sand Shots:", "\(round.totalSandShots)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Penalties:", "\(round.totalPenalties)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("GIR:", "\(round.totalGreensInRegulation)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("GIR%:", "\(String(format: "%.2f", round.totalGirPercentage))%", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Sand Saves:", "\(round.totalSandSaves)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Up & Downs:", "\(round.totalUpAndDowns)", isLarge: true)
+                                Spacer()
+                            }
                         }
-                        
-                        HStack {
-                            StatItem("Putts per Hole:", "\(String(format: "%.2f", round.totalAveragePuttsPerHole))", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Sand Shots:", "\(round.totalSandShots)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Penalties:", "\(round.totalPenalties)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("GIR:", "\(round.totalGreensInRegulation)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("GIR%:", "\(String(format: "%.2f", round.totalGirPercentage))%", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Sand Saves:", "\(round.totalSandSaves)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Up & Downs:", "\(round.totalUpAndDowns)", isLarge: true)
-                            Spacer()
-                        }
-                        
                     }
                 } label: {
                     HStack {
@@ -115,55 +122,62 @@ struct RoundSummaryView: View {
                         RelativeScore(par: round.totalParForPlayedHoles, score: round.totalScore, large: true)
                     }
                 }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        isTotalsExpanded.toggle()
+                    }
+                }
                 .padding(.horizontal)
                 
                 
                 // Front 9 Summary
                 GroupBox {
+                    if isFrontExpanded {
                     Divider()
                     
-                    VStack {
-                        
-                        HStack {
-                            StatItem("Putts:", "\(round.frontPutts)", isLarge: true)
-                            Spacer()
+                        VStack {
+                            
+                            HStack {
+                                StatItem("Putts:", "\(round.frontPutts)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Putts per Hole:", "\(String(format: "%.2f", round.frontAveragePuttsPerHole))", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Sand Shots:", "\(round.frontSandShots)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Penalties:", "\(round.frontPenalties)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("GIR:", "\(round.frontGreensInRegulation)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("GIR%:", "\(String(format: "%.2f", round.frontGirPercentage))%", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Sand Saves:", "\(round.frontSandSaves)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Up & Downs:", "\(round.frontUpAndDowns)", isLarge: true)
+                                Spacer()
+                            }
                         }
-                        
-                        HStack {
-                            StatItem("Putts per Hole:", "\(String(format: "%.2f", round.frontAveragePuttsPerHole))", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Sand Shots:", "\(round.frontSandShots)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Penalties:", "\(round.frontPenalties)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("GIR:", "\(round.frontGreensInRegulation)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("GIR%:", "\(String(format: "%.2f", round.frontGirPercentage))%", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Sand Saves:", "\(round.frontSandSaves)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Up & Downs:", "\(round.frontUpAndDowns)", isLarge: true)
-                            Spacer()
-                        }
-                        
                     }
                 } label: {
                     HStack {
@@ -174,54 +188,61 @@ struct RoundSummaryView: View {
                         RelativeScore(par: round.frontParForPlayedHoles, score: round.frontScore, large: true)
                     }
                 }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        isFrontExpanded.toggle()
+                    }
+                }
                 .padding(.horizontal)
                 
                 // Back 9 Summary
                 GroupBox {
+                    if isBackExpanded {
                     Divider()
                     
-                    VStack {
-                        
-                        HStack {
-                            StatItem("Putts:", "\(round.backPutts)", isLarge: true)
-                            Spacer()
+                        VStack {
+                            
+                            HStack {
+                                StatItem("Putts:", "\(round.backPutts)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Putts per Hole:", "\(String(format: "%.2f", round.backAveragePuttsPerHole))", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Sand Shots:", "\(round.backSandShots)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Penalties:", "\(round.backPenalties)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("GIR:", "\(round.backGreensInRegulation)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("GIR%:", "\(String(format: "%.2f", round.backGirPercentage))%", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Sand Saves:", "\(round.backSandSaves)", isLarge: true)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                StatItem("Up & Downs:", "\(round.backUpAndDowns)", isLarge: true)
+                                Spacer()
+                            }
                         }
-                        
-                        HStack {
-                            StatItem("Putts per Hole:", "\(String(format: "%.2f", round.backAveragePuttsPerHole))", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Sand Shots:", "\(round.backSandShots)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Penalties:", "\(round.backPenalties)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("GIR:", "\(round.backGreensInRegulation)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("GIR%:", "\(String(format: "%.2f", round.backGirPercentage))%", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Sand Saves:", "\(round.backSandSaves)", isLarge: true)
-                            Spacer()
-                        }
-                        
-                        HStack {
-                            StatItem("Up & Downs:", "\(round.backUpAndDowns)", isLarge: true)
-                            Spacer()
-                        }
-                        
                     }
                 } label: {
                     HStack {
@@ -230,6 +251,12 @@ struct RoundSummaryView: View {
                             .fontWeight(.semibold)
                         Spacer()
                         RelativeScore(par: round.backParForPlayedHoles, score: round.backScore, large: true)
+                    }
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        isBackExpanded.toggle()
                     }
                 }
                 .padding(.horizontal)
