@@ -14,6 +14,8 @@ class RoundModel {
     /// Id for associated course
     var courseId: Int
     
+    
+    
     /// date played
     var date: Date
     
@@ -215,6 +217,12 @@ class RoundModel {
         return sortedHoles.filter { $0.upAndDown }.count
     }
     
+    var upAndDownPercentage: Double {
+        let completedHoles = sortedHoles.filter { $0.advancedTracking }.count
+        guard completedHoles > 0 else { return 0.0 }
+        return Double(totalUpAndDowns / completedHoles) * 100
+    }
+    
     /// the summed up and downs made for all holes in the front 9
     var frontUpAndDowns: Int {
         return sortedHoles.prefix(9).filter { $0.upAndDown }.count
@@ -242,42 +250,48 @@ class RoundModel {
     
     /// the green in regulation percentage for all holes
     var totalGirPercentage: Double {
-        let completedHoles = sortedHoles.filter { $0.isScored }.count
+        let completedHoles = sortedHoles.filter { $0.advancedTracking }.count
         guard completedHoles > 0 else { return 0.0 }
         return Double(totalGreensInRegulation) / Double(completedHoles) * 100
     }
     
     /// the green in regulation percentage for all holes in the front 9
     var frontGirPercentage: Double {
-        let completedHoles = sortedHoles.prefix(9).filter { $0.isScored }.count
+        let completedHoles = sortedHoles.prefix(9).filter { $0.advancedTracking }.count
         guard completedHoles > 0 else { return 0.0 }
         return Double(frontGreensInRegulation) / Double(completedHoles) * 100
     }
     
     /// the green in regulation percentage for all holes in the back 9
     var backGirPercentage: Double {
-        let completedHoles = sortedHoles.suffix(9).filter { $0.isScored }.count
+        let completedHoles = sortedHoles.suffix(9).filter { $0.advancedTracking }.count
         guard completedHoles > 0 else { return 0.0 }
         return Double(backGreensInRegulation) / Double(completedHoles) * 100
     }
     
+    var sandSavePercentage: Double {
+        let completedHoles = sortedHoles.filter { $0.advancedTracking }.count
+        guard completedHoles > 0 else { return 0.0 }
+        return Double(totalSandSaves / completedHoles) * 100
+    }
+    
     /// the average putts per hole for all holes
     var totalAveragePuttsPerHole: Double {
-        let completedHoles = sortedHoles.filter { $0.isScored }.count
+        let completedHoles = sortedHoles.filter { $0.advancedTracking }.count
         guard completedHoles > 0 else { return 0.0 }
         return Double(totalPutts) / Double(completedHoles)
     }
     
     /// the average putts per hole for all holes in the front 9
     var frontAveragePuttsPerHole: Double {
-        let completedHoles = sortedHoles.prefix(9).filter { $0.isScored }.count
+        let completedHoles = sortedHoles.prefix(9).filter { $0.advancedTracking }.count
         guard completedHoles > 0 else { return 0.0 }
         return Double(frontPutts) / Double(completedHoles)
     }
     
     /// the average putts per hole for all holes in the back 9
     var backAveragePuttsPerHole: Double {
-        let completedHoles = sortedHoles.suffix(9).filter { $0.isScored }.count
+        let completedHoles = sortedHoles.suffix(9).filter { $0.advancedTracking }.count
         guard completedHoles > 0 else { return 0.0 }
         return Double(backPutts) / Double(completedHoles)
     }

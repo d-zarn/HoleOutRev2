@@ -139,7 +139,7 @@ class RoundService: ObservableObject {
     
     /// Returns all rounds in the model container
     /// - Returns: An array containing all rounds in the model container
-    private func getAllRounds() -> [RoundModel] {
+    func getAllRounds() -> [RoundModel] {
         do {
             let descriptor = FetchDescriptor<RoundModel>(sortBy: [SortDescriptor(\.date, order: .reverse)])
             return try modelContext.fetch(descriptor)

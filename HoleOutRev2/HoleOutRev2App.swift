@@ -6,6 +6,9 @@
 //
 
 /// TODO's
+/// Add tee choice to courses
+/// Add course and slope ratings to courses
+/// Implement tee picking in round start
 /// Implement PerformanceView
 /// Add stat summary by course in course overview
 /// Score Composition Stacked Bar Chart in performance
@@ -21,6 +24,7 @@ struct HoleOutRev2App: App {
     
     @StateObject private var roundService: RoundService
     @StateObject private var courseService = CourseService()
+    @StateObject private var statService: StatService
     let sharedModelContainer: ModelContainer
     
     init() {
@@ -35,6 +39,7 @@ struct HoleOutRev2App: App {
             self.sharedModelContainer = container
             // init the state object for roundService
             _roundService = StateObject(wrappedValue: RoundService(modelContext: container.mainContext))
+            _statService = StateObject(wrappedValue: StatService(modelContext: container.mainContext))
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
@@ -47,5 +52,6 @@ struct HoleOutRev2App: App {
         .modelContainer(sharedModelContainer)
         .environmentObject(roundService)
         .environmentObject(courseService)
+        .environmentObject(statService)
     }
 }
