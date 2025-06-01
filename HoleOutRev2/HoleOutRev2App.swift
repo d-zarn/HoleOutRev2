@@ -6,7 +6,8 @@
 //
 
 /// TODO's
-/// Add tee choice to courses
+/// Make changes to views and other services / models to work with new TeeModel
+/// Add tee choice to rounds
 /// Add course and slope ratings to courses
 /// Implement tee picking in round start
 /// Implement PerformanceView

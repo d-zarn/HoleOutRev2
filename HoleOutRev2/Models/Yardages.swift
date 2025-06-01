@@ -13,6 +13,7 @@ struct Yardages: Codable {
     var whites: Int
     var reds: Int
     
+    
     init(b blues: Int, w whites: Int, r reds: Int) {
         self.blues = blues
         self.whites = whites

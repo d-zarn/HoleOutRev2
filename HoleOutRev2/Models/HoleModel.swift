@@ -18,8 +18,6 @@ final class HoleModel {
     // identifiers and details
     var id: UUID
     var holeNumber: Int
-    var par: Int
-    var yardages: Yardages
     var holeType: HoleType
     
     // scoring variable
@@ -37,18 +35,19 @@ final class HoleModel {
     var sandSave: Bool
     var upAndDown: Bool
     
+    @Relationship var tees: [TeeModel]
+    
     @Relationship var round: RoundModel?
     
-    init(id holeNumber: Int, par: Int, blues: Int, whites: Int, reds: Int, holeType: HoleType = .straight) {
+    init(id holeNumber: Int, tees: [TeeModel], holeType: HoleType = .straight) {
         // identifiers and details
         self.id = UUID()
         self.holeNumber = holeNumber
-        self.par = par
-        self.yardages = Yardages(b: blues, w: whites, r: reds)
+        self.tees = tees
         self.holeType = holeType
         
         //scoring variables
-        self.score = par
+        self.score = tees[0].par
         self.isScored = false
         
         // detailed scoring
@@ -66,11 +65,8 @@ final class HoleModel {
     convenience init(from hole: HoleModel) {
         self.init(
             id: hole.holeNumber,
-            par: hole.par,
-            blues: hole.yardages.blues,
-            whites: hole.yardages.whites,
-            reds: hole.yardages.reds,
-            holeType: hole.holeType
+            tees: hole.tees,
+            holeType: hole.holeType,
         )
     }
     

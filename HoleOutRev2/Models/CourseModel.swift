@@ -14,16 +14,14 @@ class CourseModel: Identifiable {
     var address: String
     
     // Course Info
-    var yardages: Yardages
-    var par: Int
+    var tees: [TeeModel]
     var holes: [HoleModel]
     
-    init(id: Int, name: String, address: String, blues: Int, whites: Int, reds: Int, par: Int, holes: [HoleModel]) {
+    init(id: Int, name: String, address: String, tees: [TeeModel], holes: [HoleModel]) {
         self.id = id
         self.name = name
         self.address = address
-        self.yardages = Yardages(b: blues, w: whites, r: reds)
-        self.par = par
+        self.tees = tees
         self.holes = holes.sorted { $0.id < $1.id }
     }
     

@@ -14,8 +14,6 @@ class RoundModel {
     /// Id for associated course
     var courseId: Int
     
-    
-    
     /// date played
     var date: Date
     
@@ -31,19 +29,22 @@ class RoundModel {
     /// whether or not all 18 holes were scored
     var isComplete: Bool = false
     
+    var teesPlayed: TeeModel
+    
     /// the holes of the associated course
     @Relationship(deleteRule: .cascade) var holes: [HoleModel]
     
     /// The current hole being viewed. Used for scoring navigation
     @Transient var currentHoleIndex: Int = 0
     
-    init(courseId: Int) {
+    init(courseId: Int, teesPlayed: TeeModel) {
         self.roundId = UUID()
         self.courseId = courseId
         self.date = Date()
         self.holesPlayed = 0
         self.startTime = Date()
         self.holes = []
+        self.teesPlayed = teesPlayed
         self.currentHoleIndex = 0
     }
     
