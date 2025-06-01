@@ -149,20 +149,3 @@ struct YardageMarkers: View {
         }
     }
 }
-
-#Preview {
-    let yards = Yardages(b: 321, w: 315, r: 300)
-    
-    VStack(spacing: 30) {
-        YardageMarkers(yardages: yards, isVertical: false, markerLeft: true)
-        YardageMarkers(yardages: yards, isVertical: false, markerLeft: false)
-        YardageMarkers(yardages: yards, isVertical: true, markerLeft: true)
-        YardageMarkers(yardages: yards, isVertical: true, markerLeft: false)
-        YardageMarkers(yardages: yards, isVertical: false, markerLeft: true, isLarge: true)
-        YardageMarkers(yardages: yards, isVertical: false, markerLeft: false, isLarge: true)
-        YardageMarkers(yardages: yards, isVertical: true, markerLeft: true, isLarge: true)
-        YardageMarkers(yardages: yards, isVertical: true, markerLeft: false, isLarge: true)
-    }
-    .padding()
-    .background(Color(.secondarySystemBackground))
-}
